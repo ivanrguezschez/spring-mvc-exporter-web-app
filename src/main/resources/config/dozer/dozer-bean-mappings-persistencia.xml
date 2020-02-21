@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <trim-strings>true</trim-strings>
+    </configuration>
+	
+    <mapping map-empty-string="false">
+        <class-a>com.irs.springmvcexporterwebapp.dominio.Usuario</class-a>
+        <class-b>com.irs.springmvcexporterwebapp.negocio.vo.UsuarioVO</class-b>
+    </mapping>
+	
+    <mapping map-empty-string="false">
+        <class-a>com.irs.springmvcexporterwebapp.dominio.Rol</class-a>
+        <class-b>com.irs.springmvcexporterwebapp.negocio.vo.RolVO</class-b>
+    </mapping>
+
+</mappings>

@@ -1,0 +1,5 @@
+### Netbeans ###
+nbactions.xml
+
+### Maven ###
+target/

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd	
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+						http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+	
+    <util:properties id="configProperties" location="classpath:config/springmvcexporterwebapp.properties"/>
+	
+    <context:property-placeholder location="classpath:config/springmvcexporterwebapp-recursos.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder properties-ref="configProperties" ignore-unresolvable="true"/>
+	
+    <!-- DataSource -->
+    <!--
+    <jee:jndi-lookup id="dataSource" jndi-name="${ds.jndi.name}"/>
+    -->
+    <jdbc:embedded-database id="dataSource" type="HSQL">
+        <jdbc:script location="classpath:config/springmvcexporterwebapp-schema.sql"/>
+        <jdbc:script location="classpath:config/springmvcexporterwebapp-data.sql"/>
+    </jdbc:embedded-database>
+</beans>

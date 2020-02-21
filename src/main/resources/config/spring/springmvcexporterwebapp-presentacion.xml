@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <import resource="classpath:config/spring/springmvcexporterwebapp-recursos.xml"/>
+		
+    <!-- Activates @Autowired -->
+    <context:annotation-config/>
+	
+    <context:component-scan base-package="com.irs.springmvcexporterwebapp.presentacion.controllers"/>
+    <context:component-scan base-package="com.irs.springmvcexporterwebapp.presentacion.views"/>
+	
+    <!--
+            Expongo las propiedades del archivo springmvcexporterwebapp.properties como atributo
+            del contexto web de la aplicación para usar dichas propiedades en los jsp's.
+    -->
+    <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
+        <property name="attributes">
+            <map>
+                <entry key="configProperties">
+                    <ref bean="configProperties"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+	
+    <!-- Internacionalizacion -->	
+    <bean id="messageSource" 
+          class="org.springframework.context.support.ResourceBundleMessageSource"
+          p:basename="i18n/messages"/>
+		  
+    <!-- Excepciones -->    
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver" 
+              p:order="1" />
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" 
+              p:order="2" 
+              p:defaultErrorView="error"
+              p:warnLogCategory="com.irs.springmvcexporterwebapp"/>		  
+
+    <mvc:annotation-driven conversion-service="conversionService" content-negotiation-manager="contentNegotiationManager" />
+    
+    <bean id="conversionService" class="com.irs.springmvcexporterwebapp.presentacion.util.ConfigurableFormattingConversionServiceFactoryBean">
+        <property name="formatterRegistrars">
+            <set>
+                <bean class="com.irs.springmvcexporterwebapp.presentacion.util.DateFormatterRegistrar">
+                    <constructor-arg>
+                        <bean class="com.irs.springmvcexporterwebapp.presentacion.util.DateFormatter">
+                            <constructor-arg ref="messageSource"/>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="false" />
+        <property name="favorParameter" value="true" />
+        <property name="mediaTypes" >
+            <value>
+                json=application/json
+                xml=application/xml
+            </value>
+        </property>
+    </bean>
+        
+    <!-- Title -->
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/defs/tiles-defs.xml</value>
+            </list>
+        </property>
+        <property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory"/>
+    </bean>
+	
+    <!-- View Resolvers -->
+    <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+			  	
+    <bean id="titlesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="order" value="1"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+    </bean>
+ 
+    <!--
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    -->
+ 
+    <!--  Dozer -->	
+    <bean id="mapperPresentacion" class="org.dozer.DozerBeanMapper">
+        <property name="mappingFiles">
+            <list>
+                <value>config/dozer/dozer-bean-mappings-presentacion.xml</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="searchConfig" class="com.irs.springmvcexporterwebapp.negocio.servicios.support.SearchConfig">
+    	<property name="pageSize" value="${pagination.pageSize}"/>
+    	<property name="maxLinkedPages" value="${pagination.maxLinkedPages}"/>
+    </bean>
+</beans>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    
+    <appender name="springmvcexporterwebapp_CONSOLA" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d %-5p %C{1} - %m%n"/>
+        </layout>
+    </appender>
+
+    <!--	
+    <appender name="springmvcexporterwebapp_FICHERO" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="C:/logAplicaciones/springmvcexporterwebapp/springmvcexporterwebapp.log"/>
+        <param name="append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="MaxFileSize" value="2MB"/>
+        <param name="MaxBackupIndex" value="10"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d %-5p %C{1} - %m%n"/>
+        </layout>
+    </appender>
+    -->
+    
+    <logger name="com.irs.springmvcexporterwebapp" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+        <!--<appender-ref ref="springmvcexporterwebapp_FICHERO"/>-->
+    </logger>
+	
+    <logger name="org.apache.commons.logging" additivity="false">
+        <level value="warn"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+    </logger>
+	
+    <logger name="org.apache.commons.beanutils" additivity="false">
+        <level value="warn"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+    </logger>
+	
+    <logger name="org.apache.commons.digester" additivity="false">
+        <level value="warn"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+    </logger>
+	
+    <logger name="org.springframework" additivity="false">
+        <level value="warn"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+    </logger>	
+	
+    <logger name="org.hibernate.SQL" additivity="true">
+        <level value="debug"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+    </logger>	
+	
+    <logger name="org.dozer" additivity="false">
+        <level value="warn"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+    </logger>	
+	
+    <logger name="org.apache.tiles" additivity="false">
+        <level value="warn"/>
+        <appender-ref ref="springmvcexporterwebapp_CONSOLA"/>
+    </logger>	
+</log4j:configuration>
