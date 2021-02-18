@@ -19,7 +19,7 @@
         <hibernate.version>4.2.20.Final</hibernate.version>
         <dozer.version>5.4.0</dozer.version>
         <tiles.version>2.2.2</tiles.version>
-        <jackson.version>2.10.1</jackson.version>
+        <jackson.version>2.12.1</jackson.version>
  
         <junit.version>4.12</junit.version>
     </properties>
